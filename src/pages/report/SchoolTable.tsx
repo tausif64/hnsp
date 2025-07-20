@@ -125,7 +125,7 @@ const SchoolTable: React.FC = () => {
 
 
     return (
-        <div className="max-w-full">
+        <div className="special-padding">
             <DataTable
                 columns={columns}
                 data={schools}
@@ -133,6 +133,7 @@ const SchoolTable: React.FC = () => {
                 fixedHeader
                 fixedHeaderScrollHeight="550px"
                 highlightOnHover
+                striped
                 actions={
                     <>
                         <AddSchool />
