@@ -73,7 +73,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                         </div>
                     </div>
                 </header>
-                <div className="h-full p-4">
+                <div className="h-full layout">
                     {children}
                 </div>
                 <footer className="py-5 px-7 w-full bg-[#03409E] font-medium text-white">Copyright © 2025</footer>

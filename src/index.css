@@ -134,3 +134,11 @@ h2{
 h3{
   font-size: 16;
 }
+
+.layout{
+  @apply p-4;
+}
+
+.layout:has(.special-padding){
+  @apply p-0;
+}
