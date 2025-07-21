@@ -6,7 +6,7 @@ import AddSchool from "@/components/my-component/AddSchool";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSchoolData } from "@/store/school/schoolSlice";
 import { toast } from "sonner";
 import { Eye } from "lucide-react";
@@ -14,13 +14,17 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Link } from "react-router-dom";
 import UpdateSchool from "@/components/my-component/UpdateSchool";
 import DeleteSchool from "@/components/my-component/DeleteSchool";
+import { Input } from "@/components/ui/input";
 
 
 const SchoolTable: React.FC = () => {
 
     const { schools } = useSelector((state: RootState) => state.school);
-
     const dispatch = useAppDispatch();
+
+    const [term, setTerm] = useState("");
+    const [results, setResults] = useState<SchoolData[]>(schools);
+
 
     useEffect(() => {
         const fetchSchoolData = async () => {
@@ -33,7 +37,6 @@ const SchoolTable: React.FC = () => {
     }, [dispatch, schools]);
 
 
-    // Define the columns with type annotations
     const columns: TableColumn<SchoolData>[] = [
         {
             name: "S.No.",
@@ -99,8 +102,8 @@ const SchoolTable: React.FC = () => {
     ];
 
     const handleOnExport = (): void => {
-        if (schools.length !== 0) {
-            const transformedData = schools.map((row, index) => ({
+        if (results.length !== 0) {
+            const transformedData = results.map((row, index) => ({
                 "S.No.": index + 1,
                 "School ID": row.schoolId || '',
                 "School Name": row.schoolName || '',
@@ -122,13 +125,23 @@ const SchoolTable: React.FC = () => {
             toast.error("No Data is available");
         }
     };
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const filtered = schools.filter(d =>
+                d.schoolName.toLowerCase().includes(term.toLowerCase())
+            );
+            setResults(filtered);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [schools, term]);
 
 
     return (
         <div className="special-padding">
             <DataTable
                 columns={columns}
-                data={schools}
+                data={results}
                 pagination
                 fixedHeader
                 fixedHeaderScrollHeight="550px"
@@ -136,10 +149,12 @@ const SchoolTable: React.FC = () => {
                 striped
                 actions={
                     <>
+                        <Input type="search" onChange={(e) => setTerm(e.target.value)} className="max-w-sm" placeholder="School Name" disabled={schools.length === 0} />
                         <AddSchool />
-                        <Button type="button" onClick={handleOnExport}>
+                        <Button type="button" onClick={handleOnExport} disabled={results.length === 0} >
                             Export
-                        </Button></>
+                        </Button>
+                    </>
                 }
             />
         </div>
