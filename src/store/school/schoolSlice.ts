@@ -117,9 +117,9 @@ const schoolSlice = createSlice({
       .addCase(getSchoolData.fulfilled, (state, action) => {
         state.isError = false;
         state.isSuccess = true;
-        state.isLoading = false;
-        state.message = null;
         state.schools = action.payload;
+        state.message = null;
+        state.isLoading = false;
       })
       .addCase(getSchoolData.rejected, (state, action) => {
         state.isLoading = false;
