@@ -142,3 +142,14 @@ h3{
 .layout:has(.special-padding){
   @apply p-0;
 }
+
+
+.sc-fVHBlr::-webkit-scrollbar {
+    scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rdta-table-wrapper {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
