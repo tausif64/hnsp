@@ -15,6 +15,7 @@ import { useAppDispatch } from "./hooks/useAppDispatch";
 import { useEffect } from "react";
 import { getLoginStatus } from "./store/auth/authSlice";
 import Layout from "./pages/Layout";
+import GlobalLoading from "./pages/GlobalLoading";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
   return (
     <>
       <Toaster />
+      <GlobalLoading />
       <ShowOnLogin>
         <Layout>
           <Routes>
